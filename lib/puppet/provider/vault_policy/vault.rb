@@ -1,4 +1,5 @@
 require 'vault'
+require 'erb'
 
 Puppet::Type.type(:vault_policy).provide(:vault) do
   desc 'This provider manages vault policies.'
@@ -6,20 +7,31 @@ Puppet::Type.type(:vault_policy).provide(:vault) do
   defaultfor kernel: :Linux
   confine    kernel: :Linux
 
+  def rules_to_string(rules)
+    template = ERB.new <<-EOF
+        % rules.each do |rule|
+          path "<%= rule['path'] %>" {
+            capabilities = <%= rule['capabilities'] %>
+          }
+
+        % end
+    EOF
+  end
+
   def exists?
     Vault.sys.policies.include? resource[:name]
   end
 
-  def content
+  def rules
     Vault.sys.policy(resource[:name]).rules
   end
 
-  def content=(_value)
-    Vault.sys.put_policy(resource[:name], resource[:content])
+  def rules=(value)
+    Vault.sys.put_policy(resource[:name], rules_to_string(resource[:rules]))
   end
 
   def create
-    Vault.sys.put_policy(resource[:name], resource[:content])
+    Vault.sys.put_policy(resource[:name], rules_to_string(resource[:rules]))
   end
 
   def destroy
