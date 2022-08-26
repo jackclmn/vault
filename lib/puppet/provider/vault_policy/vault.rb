@@ -9,12 +9,12 @@ Puppet::Type.type(:vault_policy).provide(:vault) do
 
   def rules_to_string(rules)
     template = %q{
-        % rules.each do |v|
+        <% rules.each do |v| %>
             path "<%= v['path'] %>" {
               capabilities = <%= v['capabilities'] %>
             }
   
-        % end
+        <% end %>
     }.gsub(/^  /, '')
     message = ERB.new(template).result(binding)
     message
