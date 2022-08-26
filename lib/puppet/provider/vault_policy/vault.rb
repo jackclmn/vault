@@ -9,14 +9,17 @@ Puppet::Type.type(:vault_policy).provide(:vault) do
 
   def rules_to_string(rules)
     template = %q{
-        % rules.each do |rule|
-            path "<%= rule['path'] %>" {
-              capabilities = <%= rule['capabilities'] %>
+        % r.each do |i|
+            path "<%= i['path'] %>" {
+              capabilities = <%= i['capabilities'] %>
             }
   
         % end
     }
-    message = ERB.new(template).result
+    message = ERB.new(template)
+    r = rules
+    result = message.result
+    result
   end
 
   def exists?
