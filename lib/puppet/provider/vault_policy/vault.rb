@@ -34,7 +34,7 @@ path "<%= rule %>" {
   end
 
   def rules=(value)
-    Puppet.debug("entering rules=value with name: #{resource['name']} and rules #{resource['rules']}")
+    Puppet.debug("entering rules=value with name: #{resource[:name]} and rules #{resource[:rules]}")
     rules = rules_to_string(resource[:rules])
     Puppet.debug("rules is: #{rules}")
     rules_str = rules.to_str
@@ -43,12 +43,12 @@ path "<%= rule %>" {
   end
 
   def create
-    Puppet.debug("entering create with name: #{resource['name']} and rules #{resource['rules']}")
+    Puppet.debug("entering create with name: #{resource[:name]} and rules #{resource[:rules]}")
     Vault.sys.put_policy(resource[:name], rules_to_string(resource[:rules]))
   end
 
   def destroy
-    Puppet.debug("entering destroy with name: #{resource['name']} and rules #{resource['rules']}")
+    Puppet.debug("entering destroy with name: #{resource[:name]} and rules #{resource[:rules]}")
     Vault.sys.delete_policy(resource[:name])
   end
 end
