@@ -16,6 +16,7 @@ Puppet::Type.type(:vault_policy).provide(:vault) do
 
         % end
     EOF
+    template.result
   end
 
   def exists?
