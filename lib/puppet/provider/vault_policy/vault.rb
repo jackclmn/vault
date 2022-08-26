@@ -8,15 +8,15 @@ Puppet::Type.type(:vault_policy).provide(:vault) do
   confine    kernel: :Linux
 
   def rules_to_string(rules)
-    template = ERB.new <<-EOF
+    template = %q{
         % rules.each do |rule|
-          path "<%= rule['path'] %>" {
-            capabilities = <%= rule['capabilities'] %>
-          }
-
+            path "<%= rule['path'] %>" {
+              capabilities = <%= rule['capabilities'] %>
+            }
+  
         % end
-    EOF
-    template.result
+    }
+    message = ERB.new(template).result
   end
 
   def exists?
