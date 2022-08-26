@@ -18,7 +18,7 @@ Puppet::Type.type(:vault_policy).provide(:vault) do
     }.gsub(/^  /, '')
     message = ERB.new(template)
     r = rules
-    result = message.result
+    result = message.result(binding)
     result
   end
 
