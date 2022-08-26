@@ -35,7 +35,11 @@ Puppet::Type.type(:vault_policy).provide(:vault) do
 
   def rules=(value)
     Puppet.debug("entering rules=value with name: #{resource['name']} and rules #{resource['rules']}")
-    Vault.sys.put_policy(resource[:name], rules_to_string(resource[:rules]))
+    rules = rules_to_string(resource[:rules])
+    Puppet.debug("rules is: #{rules}")
+    rules_str = rules.to_str
+    Puppet.debug("rules_str is: #{rules_str}")
+    Vault.sys.put_policy(resource[:name], rules_str)
   end
 
   def create
