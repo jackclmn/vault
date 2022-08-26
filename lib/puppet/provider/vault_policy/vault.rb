@@ -11,11 +11,11 @@ Puppet::Type.type(:vault_policy).provide(:vault) do
   def rules_to_string(rules)
     Puppet.debug("Entering rules_to_string with rules: #{rules}")
     template = %q{
+        # comment
         <% rules.each do |v| %>
-            path "<%= v %>" {
-              capabilities = <%= v %>
-            }
-  
+path "<%= v %>" {
+    capabilities = <%= v %>
+}
         <% end %>
     }.gsub(/^  /, '')
     message = ERB.new(template).result(binding)
