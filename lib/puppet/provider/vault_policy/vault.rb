@@ -9,7 +9,7 @@ Puppet::Type.type(:vault_policy).provide(:vault) do
 
   def rules_to_string(rules)
     template = %q{
-        % r.each do |k, v|
+        % rules.each do |v|
             path "<%= v['path'] %>" {
               capabilities = <%= v['capabilities'] %>
             }
