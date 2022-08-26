@@ -12,9 +12,9 @@ Puppet::Type.type(:vault_policy).provide(:vault) do
     Puppet.debug("Entering rules_to_string with rules: #{rules}")
     template = %q{
         # comment
-        <% rules.each do |v| %>
-path "<%= v %>" {
-    capabilities = <%= v %>
+        <% rules.each do |rule| %>
+path "<%= rule['path'] %>" {
+    capabilities = <%= rule['capabilities] %>
 }
         <% end %>
     }.gsub(/^  /, '')
