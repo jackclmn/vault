@@ -12,7 +12,7 @@ Puppet::Type.newtype(:vault_policy) do
     isnamevar
   end
 
-  newproperty(:content) do
+  newproperty(:rules) do
     desc 'The content of the vault policy'
   end
 end
