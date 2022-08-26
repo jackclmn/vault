@@ -30,7 +30,7 @@ path "<%= rule['path'] %>" {
   newproperty(:rules, array_matching: :all) do
     desc 'The content of the vault policy'
     munge do |value|
-        rules_to_srting(value)
+        rules_to_string(value)
     end
   end
 end
