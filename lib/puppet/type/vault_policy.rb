@@ -15,12 +15,12 @@ Puppet::Type.newtype(:vault_policy) do
   newproperty(:rules, array_matching: :all) do
     desc 'The content of the vault policy'
     munge do |value|
-        Puppet.debug("Entering rules_to_string with rules: #{rules}")
+        Puppet.debug("Entering rules_to_string with rules: #{value}")
         template = %q{
     # comment
-    <% rules.each do |rule| %>
-    path "<%= rule['path'] %>" {
-        capabilities = <%= rule['capabilities'] %>
+    <% value.each do |v| %>
+    path "<%= v['path'] %>" {
+        capabilities = <%= v['capabilities'] %>
     }
     <% end %>
         }.gsub(/^  /, '')
