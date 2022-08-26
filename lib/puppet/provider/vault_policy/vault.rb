@@ -13,8 +13,8 @@ Puppet::Type.type(:vault_policy).provide(:vault) do
     template = %q{
 # comment
 <% rules.each do |rule| %>
-path "<%= rule %>" {
-    capabilities = <%= rule %>
+path "<%= rule['path'] %>" {
+    capabilities = <%= rule['capabilities'] %>
 }
 <% end %>
     }.gsub(/^  /, '')
