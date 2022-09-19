@@ -8,20 +8,20 @@ Puppet::Type.type(:vault_policy).provide(:vault) do
   defaultfor kernel: :Linux
   confine    kernel: :Linux
 
-#   def rules_to_string(rules)
-#     Puppet.debug("Entering rules_to_string with rules: #{rules}")
-#     template = %q{
-# # comment
-# <% rules.each do |rule| %>
-# path "<%= rule['path'] %>" {
-#     capabilities = <%= rule['capabilities'] %>
-# }
-# <% end %>
-#     }.gsub(/^  /, '')
-#     message = ERB.new(template).result(binding)
-#     Puppet.debug("message is: #{message}")
-#     message
-#   end
+  #   def rules_to_string(rules)
+  #     Puppet.debug("Entering rules_to_string with rules: #{rules}")
+  #     template = %q{
+  # # comment
+  # <% rules.each do |rule| %>
+  # path "<%= rule['path'] %>" {
+  #     capabilities = <%= rule['capabilities'] %>
+  # }
+  # <% end %>
+  #     }.gsub(/^  /, '')
+  #     message = ERB.new(template).result(binding)
+  #     Puppet.debug("message is: #{message}")
+  #     message
+  #   end
 
   def exists?
     Puppet.debug('entering exists?')
@@ -33,12 +33,12 @@ Puppet::Type.type(:vault_policy).provide(:vault) do
     Vault.sys.policy(resource[:name]).rules
   end
 
-  def rules=(value)
+  def rules=(_value)
     Puppet.debug("entering rules=value with name: #{resource[:name]} and rules #{resource[:rules]}")
-    #rules = rules_to_string(resource[:rules])
-    #Puppet.debug("rules is: #{rules}")
-    #rules_str = rules.to_str
-    #Puppet.debug("rules_str is: #{rules_str}")
+    # rules = rules_to_string(resource[:rules])
+    # Puppet.debug("rules is: #{rules}")
+    # rules_str = rules.to_str
+    # Puppet.debug("rules_str is: #{rules_str}")
     Vault.sys.put_policy(resource[:name], resource[:rules])
   end
 
